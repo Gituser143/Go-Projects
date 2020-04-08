@@ -46,7 +46,3 @@ Ace of Spades
 7 of Spades
 8 of Spades
 9 of Spades
-10 of Spades
-Jack of Spades
-Queen of Spades
-King of Spades

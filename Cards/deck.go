@@ -16,6 +16,11 @@ func newDeck() deck {
 	return cards
 }
 
+func newEmptyDeck() deck {
+	cards := deck{}
+	return cards
+}
+
 func (d *deck) populate() {
 	cardValues := []string{"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"}
 	cardSuits := []string{"Diamonds", "Hearts", "Clubs", "Spades"}
@@ -56,7 +61,19 @@ func (d deck) printUsingOS() {
 }
 
 func createDeckFromFile(filename string) (deck, error) {
+	// str, err := ioutil.ReadFile("mydeck.txt")
+	// newDeck := deck(strings.Split(string(str), "\n"))
+	// return newDeck, err
+	cards := newEmptyDeck()
+	err := cards.populateFromFile(filename)
+	return cards, err
+}
+
+func (d *deck) populateFromFile(filename string) error {
 	str, err := ioutil.ReadFile("mydeck.txt")
-	newDeck := deck(strings.Split(string(str), "\n"))
-	return newDeck, err
+	cards := strings.Split(string(str), "\n")
+	for _, card := range cards {
+		*d = append(*d, card)
+	}
+	return err
 }
