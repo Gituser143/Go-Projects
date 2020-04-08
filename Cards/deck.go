@@ -71,9 +71,11 @@ func createDeckFromFile(filename string) (deck, error) {
 
 func (d *deck) populateFromFile(filename string) error {
 	str, err := ioutil.ReadFile("mydeck.txt")
-	cards := strings.Split(string(str), "\n")
-	for _, card := range cards {
-		*d = append(*d, card)
+	if err == nil {
+		cards := strings.Split(string(str), "\n")
+		for _, card := range cards {
+			*d = append(*d, card)
+		}
 	}
 	return err
 }
