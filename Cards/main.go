@@ -1,12 +1,15 @@
 package main
 
+import "fmt"
+
 func main() {
 
 	var cards = newDeck()
+	hand, cards := deal(cards, 4)
 
+	fmt.Println("Cards:")
 	cards.print()
-}
 
-func getCard() string {
-	return "King of Diamonds"
+	fmt.Println("\nHand:")
+	hand.print()
 }
