@@ -3,9 +3,7 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
-	"log"
 	"math/rand"
-	"os"
 	"strings"
 	"time"
 )
@@ -53,19 +51,16 @@ func (d deck) printToFile(filename string) error {
 	return ioutil.WriteFile(filename, []byte(str), 0777)
 }
 
-func (d deck) printUsingOS() {
-	str := strings.Join(d, "\n")
-	file, err := os.Open("deck.txt")
-	if err != nil {
-		log.Fatal(err)
-	}
-	file.Write([]byte(str))
-}
+// func (d deck) printUsingOS() {
+// 	str := strings.Join(d, "\n")
+// 	file, err := os.Open("deck.txt")
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
+// 	file.Write([]byte(str))
+// }
 
 func createDeckFromFile(filename string) (deck, error) {
-	// str, err := ioutil.ReadFile("mydeck.txt")
-	// newDeck := deck(strings.Split(string(str), "\n"))
-	// return newDeck, err
 	cards := newEmptyDeck()
 	err := cards.populateFromFile(filename)
 	return cards, err
@@ -83,7 +78,6 @@ func (d *deck) populateFromFile(filename string) error {
 }
 
 func (d deck) shuffle() {
-	//	var newPosition int
 	source := rand.NewSource(time.Now().UnixNano())
 	r := rand.New(source)
 	for i := range d {
