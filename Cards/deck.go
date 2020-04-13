@@ -42,7 +42,11 @@ func (d deck) print() {
 }
 
 func deal(d deck, handSize int) (deck, deck) {
-	return d[:handSize], d[handSize:]
+	if len(d) < handSize {
+		fmt.Printf("Cannot deal a hand of size %v. Deck has only %v cards.\n", handSize, len(d))
+		return d, nil
+	}
+	return d[handSize:], d[:handSize]
 }
 
 func (d deck) printToFile(filename string) error {
