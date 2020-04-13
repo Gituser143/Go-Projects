@@ -22,6 +22,10 @@ func (p person) printDetails() {
 
 }
 
+func (p *person) updateFirstName(firstName string) {
+	(*p).firstName = firstName
+}
+
 func main() {
 	human := person{}
 	human.firstName = "Mega"
@@ -30,8 +34,12 @@ func main() {
 	// human.contact.mobile = 9999999999
 	human.contactDetails.email = "test@test.com"
 	human.contactDetails.mobile = 1234567890
-	// fmt.Println(human)
-	// fmt.Printf("%+v", human)
 
+	// humanPtr := &human
+	// humanPtr.updateFirstName("Mr.")
+	// The above method is the complete way of using pointers and sending a referance to a receiver
+	// The below version works the exact same way as Go helps you use it as a shortcut
+
+	human.updateFirstName("Mr.")
 	human.printDetails()
 }
