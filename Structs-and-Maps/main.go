@@ -43,3 +43,24 @@ func main() {
 	human.updateFirstName("Mr.")
 	human.printDetails()
 }
+
+//=============================================================================================
+//																	Maps
+//=============================================================================================
+
+type hashMap map[int]string
+
+func (m hashMap) print() {
+	for key, value := range m {
+		fmt.Println(key, ":", value)
+	}
+}
+
+func main2() { //Rename to main when needed to execute
+
+	myMap := hashMap{}
+	//	myMap := make(map[int]string)
+	myMap[1] = "One"
+	myMap[2] = myMap[1] + "Two"
+	myMap.print()
+}
