@@ -56,7 +56,7 @@ func (m hashMap) print() {
 	}
 }
 
-func main2() { //Rename to main when needed to execute
+func main2() { //Rename to main() when needed to execute
 
 	myMap := hashMap{}
 	//	myMap := make(map[int]string)
