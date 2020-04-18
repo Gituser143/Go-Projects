@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-type str struct{}
+type customWriter struct{}
 
 func main() {
 	resp, err := http.Get("http://google.com")
@@ -30,11 +30,11 @@ func main() {
 	// io.Copy(os.Stdout, resp.Body)
 
 	// THe below few lines uses a custom writer as destination
-	strVar := str{}
-	io.Copy(strVar, resp.Body)
+	wirterVar := customWriter{}
+	io.Copy(wirterVar, resp.Body)
 }
 
-func (str) Write(p []byte) (n int, err error) {
+func (customWriter) Write(p []byte) (n int, err error) {
 	fmt.Println(string(p))
 	return len(p), nil
 }
