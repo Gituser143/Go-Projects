@@ -34,7 +34,7 @@ func main() {
 	io.Copy(wirterVar, resp.Body)
 }
 
-func (customWriter) Write(p []byte) (n int, err error) {
-	fmt.Println(string(p))
-	return len(p), nil
+func (customWriter) Write(p []byte) (int, error) {
+	_, err := fmt.Println(string(p))
+	return len(p), err
 }
