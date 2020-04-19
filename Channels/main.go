@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"time"
 )
 
 func main() {
@@ -20,12 +21,27 @@ func main() {
 		go checkUrlStatus(url, c)
 	}
 
+	// Naive approach
 	// for i := 0; i < len(websites); i++ {
 	// 	fmt.Println(<-c)
 	// }
 
-	for {
-		go checkUrlStatus(<-c, c)
+	// Better than Naive approach
+	// for {
+	// 	go checkUrlStatus(<-c, c)
+	// }
+
+	// Cleaner approach
+	// for url := range c {
+	// 	go checkUrlStatus(url, c)
+	// }
+
+	// Safer approach (Doesn't DoS the sites)
+	for url := range c {
+		go func(url2 string) {
+			time.Sleep(time.Second * 5)
+			checkUrlStatus(url2, c)
+		}(url)
 	}
 }
 
