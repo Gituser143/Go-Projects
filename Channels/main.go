@@ -29,6 +29,7 @@ func checkUrlStatus(url string, c chan string) {
 	_, err := http.Get(url)
 	if err != nil {
 		// fmt.Println("The Website", url, "is down")
+		fmt.Println(err)
 		c <- "The Website " + url + " is down"
 	} else {
 		// fmt.Println(url, "is up and running")
