@@ -12,3 +12,4 @@ Projects
 * ```Interface/``` : Two programs ```bots.go``` and ```shapes.go``` which show basic functionalities of interfaces.
 * ```HTTP/``` : A simple program to perform a GET request and displays body of the request.
 * ```Channels/``` : A program which implements concurrency in Go by performing checking if websites are active.
+* ```Assignments/``` : Assignments pertaining to the Udemy course by Stephen Grider
