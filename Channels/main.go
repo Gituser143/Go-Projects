@@ -20,19 +20,23 @@ func main() {
 		go checkUrlStatus(url, c)
 	}
 
-	for i := 0; i < len(websites); i++ {
-		fmt.Println(<-c)
+	// for i := 0; i < len(websites); i++ {
+	// 	fmt.Println(<-c)
+	// }
+
+	for {
+		go checkUrlStatus(<-c, c)
 	}
 }
 
 func checkUrlStatus(url string, c chan string) {
 	_, err := http.Get(url)
 	if err != nil {
-		// fmt.Println("The Website", url, "is down")
+		fmt.Println("The Website", url, "is down")
 		fmt.Println(err)
-		c <- "The Website " + url + " is down"
+		c <- url
 	} else {
-		// fmt.Println(url, "is up and running")
-		c <- url + " is up and running"
+		fmt.Println(url, "is up and running")
+		c <- url
 	}
 }
