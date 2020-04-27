@@ -1,4 +1,4 @@
-GoProjects
+Go-Projects
 ===========
 
 My collection of simple Go experminets to help me learn Go.
