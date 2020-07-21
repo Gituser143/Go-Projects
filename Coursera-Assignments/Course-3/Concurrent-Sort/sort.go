@@ -73,12 +73,12 @@ func main() {
 	wg.Wait()
 
 	wg.Add(2)
-	first := merge(intSlice[:size/4], intSlice[size/4:size/2], &wg)
-	second := merge(intSlice[size/2:3*size/4], intSlice[3*size/4:], &wg)
+	firstHalf := merge(intSlice[:size/4], intSlice[size/4:size/2], &wg)
+	secondHalf := merge(intSlice[size/2:3*size/4], intSlice[3*size/4:], &wg)
 	wg.Wait()
 
 	wg.Add(1)
-	sortedArr := merge(first, second, &wg)
+	sortedArr := merge(firstHalf, secondHalf, &wg)
 	wg.Wait()
 
 	fmt.Println("Sorted Array is", sortedArr)
