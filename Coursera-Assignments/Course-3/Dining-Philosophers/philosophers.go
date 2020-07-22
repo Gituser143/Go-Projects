@@ -26,11 +26,14 @@ func (p philo) eat(index int) {
 		p.leftCS.Unlock()
 		p.rightCS.Unlock()
 	}
-	wg.Done()
+	// wg.Done()
 }
 
-func dine(index int, ch chan int) {
-
+func dine(p []*philo, ch chan int) {
+	index := <-ch
+	// fmt.Println(index)
+	p[index].eat(index)
+	wg.Done()
 }
 
 func main() {
@@ -44,12 +47,14 @@ func main() {
 		philos[i] = &philo{chopSticks[i], chopSticks[(i+1)%5]}
 	}
 
-	// ch := make(chan int)
+	ch := make(chan int, 1)
 
-	for i := 0; i < 5; i++ {
-		wg.Add(2)
-		go philos[i].eat(i)
-		go philos[(i+2)%5].eat((i + 2) % 5)
+	for i := 0; i < 5; i++ { // Each philo.eat() is called twice
+		wg.Add(1)
+		ch <- i
+		go dine(philos, ch)
+		ch <- (i + 2) % 5
+		go dine(philos, ch)
 		wg.Wait()
 	}
 }
