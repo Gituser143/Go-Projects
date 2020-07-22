@@ -16,13 +16,24 @@ type philo struct {
 
 var wg sync.WaitGroup
 
+const num = 10                    // Number of Philosophers
+const hunger = 2                  // Number of times each philosopher eats
+const timeToEat = 2 * time.Second // Time taken to eat once
+
 func (p philo) eat(index int) {
-	for i := 0; i < 3; i++ {
-		p.leftCS.Lock()
-		p.rightCS.Lock()
+	for i := 0; i < hunger; i++ {
+		if index%2 == 0 {
+			p.rightCS.Lock()
+			p.leftCS.Lock()
+		} else {
+			p.leftCS.Lock()
+			p.rightCS.Lock()
+		}
+
 		fmt.Println("Starting to Eat", index)
-		time.Sleep(1 * time.Second)
+		time.Sleep(timeToEat)
 		fmt.Println("Finished Eating", index)
+
 		p.leftCS.Unlock()
 		p.rightCS.Unlock()
 	}
@@ -42,21 +53,22 @@ func dine(p []*philo, ch chan int) {
 }
 
 func main() {
-	chopSticks := make([]*chopStick, 5)
-	for i := 0; i < 5; i++ {
+
+	chopSticks := make([]*chopStick, num)
+	for i := 0; i < num; i++ {
 		chopSticks[i] = new(chopStick)
 	}
 
-	philos := make([]*philo, 5)
-	for i := 0; i < 5; i++ {
-		philos[i] = &philo{chopSticks[i], chopSticks[(i+1)%5]}
+	philos := make([]*philo, num)
+	for i := 0; i < num; i++ {
+		philos[i] = &philo{chopSticks[i], chopSticks[(i+1)%num]}
 	}
 
-	ch := make(chan int, 6)
+	ch := make(chan int)
 
 	go dine(philos, ch)
 
-	for i := 0; i < 5; i++ {
+	for i := 0; i < num; i++ {
 		wg.Add(1)
 		ch <- i
 	}
